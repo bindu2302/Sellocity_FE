@@ -8,7 +8,7 @@ export default function About() {
     return (
         <>
            <header className="nav-container">
-                   <div className="logo">SELLOCITY</div>
+                   <div className="logo">SALES-SAVVY</div>
                    <nav className="nav-links">
                      <NavLink to="/">HOME</NavLink>
                      <NavLink to="/about">ABOUT</NavLink>
@@ -18,13 +18,13 @@ export default function About() {
                  </header>
 
             <div className="about-container">
-                <h1 className="about-heading">About Sellocity</h1>
+                <h1 className="about-heading">About SalesSavvy</h1>
                 <p className="about-paragraph">
-                    <strong>Welcome to Sellocity – Where Smart Shopping Begins!</strong>
+                    <strong>Welcome to SalesSavvy – Where Smart Shopping Begins!</strong>
                 </p>
 
                 <p className="about-paragraph">
-                    At <strong>Sellocity</strong>, we believe that shopping should be easy,
+                    At <strong>SalesSavvy</strong>, we believe that shopping should be easy,
                     affordable, and exciting. Whether you're looking for the latest fashion trends,
                     must-have gadgets, home essentials, or exclusive deals, we’ve got something
                     for everyone.
@@ -40,7 +40,7 @@ export default function About() {
 
                 <h2 className="about-subheading">Who We Serve</h2>
                 <p className="about-paragraph">
-                    From casual shoppers to deal-hunters and trendsetters, <strong>Sellocity</strong> is built
+                    From casual shoppers to deal-hunters and trendsetters, <strong>SalesSavvy</strong> is built
                     for anyone who wants <em>value without compromise</em>.
                 </p>
 
@@ -51,7 +51,7 @@ export default function About() {
                 </p>
 
                 <p className="about-thankyou">
-                    <strong>Thank you for choosing Sellocity. Let’s make every purchase a smart one!</strong>
+                    <strong>Thank you for choosing SalesSavvy. Let’s make every purchase a smart one!</strong>
                 </p>
             </div>
         </>

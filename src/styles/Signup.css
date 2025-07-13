@@ -29,7 +29,7 @@
 
 .signup-wrapper {
   min-height: 100vh;
-  background-color:  #36e3f2;
+  background-color: #f4d03f; /* Lemon yellow */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +37,7 @@
 
 /* Sign-up container box - reduced size for square feel */
 .signup-container {
-  background-color: #e7feff;
+  background-color: #fffde7;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -87,11 +87,9 @@
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #36e3f2;
+  border-color: #ffc107;
   outline: none;
-  box-shadow: 0 0 5px #4cb7b7;
 }
-
 
 /* Button styling */
 .signup-button {
@@ -107,6 +105,6 @@
 }
 
 .signup-button:hover {
-  background-color:  #36e2f2;
+  background-color: #ffc107;
   color: #000;
 }

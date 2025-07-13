@@ -167,3 +167,29 @@ select {
 .badge.return-rejected {
   background-color: #f44336;
 }
+
+
+.status-navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #ccc;
+}
+
+.status-tab {
+  padding: 8px 16px;
+  background-color: #d3d3d3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.status-tab.active {
+  background-color: #588157;
+  color: white;
+}

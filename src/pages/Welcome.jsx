@@ -8,7 +8,7 @@ export default function Welcome() {
     <>
       {/* Header/Navbar */}
       <header className="nav-container">
-        <div className="logo">SELLOCITY</div>
+        <div className="logo">SALES-SAVVY</div>
         <nav className="nav-links">
           <NavLink to="/">HOME</NavLink>
           <NavLink to="/about">ABOUT</NavLink>
@@ -20,8 +20,8 @@ export default function Welcome() {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-text">
-          <h1>SHOP SMART WITH SELLOCITY</h1>
-          <p>Great deals. Quick delivery. Easy and stylish shopping for everyone.</p>
+          <h1>SHOP SMART WITH SALES SAVVY</h1>
+          <p>Big deals. Fast delivery. Zero hassle. Shopping made smarter and stylish.</p>
         </div>
 
         <Sign_in />
@@ -31,7 +31,7 @@ export default function Welcome() {
       {/* Info Section */}
       <section className="info-section">
         <div className="info-card">
-          <h2>Why SELLOCITY?</h2>
+          <h2>Why SALES SAVVY?</h2>
           <p>We bring trending products and unbeatable deals to your fingertips. Fast delivery, trusted vendors, and a smooth shopping experience.</p>
           <ul>
             <li>🚚 Fast & Reliable Shipping</li>
@@ -61,7 +61,7 @@ export default function Welcome() {
           <NavLink to="/privacy">PRIVACY POLICY</NavLink>
         </div>
         <p className="footer-credit">
-          Copyright ©2025 Created By <strong>HIMA BINDU</strong>
+          Copyright ©2025 Created By <strong>PAVIN RAJA</strong>
         </p>
       </footer>
     </>

@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <>
      <header className="nav-container">
-             <div className="logo">SELLOCITY</div>
+             <div className="logo">SALES-SAVVY</div>
              <nav className="nav-links">
                <NavLink to="/">HOME</NavLink>
                <NavLink to="/about">ABOUT</NavLink>
@@ -17,7 +17,7 @@ export default function Contact() {
 
     <div className="contact-wrapper">
       <div className="contact-container">
-        <h1 className="contact-title">Get in Touch with Sellocity</h1>
+        <h1 className="contact-title">Get in Touch with SalesSavvy</h1>
         <p className="contact-description">
           We'd love to hear from you! Whether it's feedback, questions, or just to say hello — drop us a message.
         </p>
@@ -57,7 +57,7 @@ export default function Contact() {
             <p>+91 98765 43210</p>
 
             <h3>📧 Email</h3>
-            <p>support@sellocity.in</p>
+            <p>support@sales-savvy.in</p>
 
             <h3>⏰ Working Hours</h3>
             <p>Mon - Fri: 9:00 AM – 6:00 PM</p>

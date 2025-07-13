@@ -4,44 +4,60 @@ import axios from 'axios';
 import "../styles/AdminHome.css";
 
 export default function Admin_home() {
-  const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   useEffect(() => {
-    axios.get('http://localhost:8080/admin/orders', {
-      withCredentials: true // ⭐ Add this line
+    axios.get("http://localhost:8080/admin/orders", {
+      withCredentials: true
     })
-    .then(res => setOrders(res.data))
-    .catch(err => console.error('Failed to fetch orders:', err));
-  }, []);
+      .then(res => {
+        const normalized = res.data.map(order => ({
+          ...order,
+          status:
+            !order.status || order.status.trim() === "" || order.status === "PAID"
+              ? "Pending"
+              : order.status
+        }));
+        setOrders(normalized);
+      })
+      .catch(err => {
+        console.error("Failed to fetch orders:", err);
+        // if not authenticated, bounce back to login
+        if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+          navigate("/", { replace: true });
+        }
+      });
+  }, [navigate]);
 
   const updateStatus = (orderId, newStatus) => {
-    axios.put(`http://localhost:8080/admin/orders/${orderId}/status`, newStatus, {
-      headers: { 'Content-Type': 'text/plain' },
-      withCredentials: true // ⭐ Add this line
-    })
-    .then(() => {
-      setOrders(prev =>
-        prev.map(order =>
-          order.id === orderId ? { ...order, status: newStatus } : order
-        )
-      );
-    })
-    .catch(err => console.error('Failed to update status:', err));
+    const statusToSet = newStatus && newStatus.trim() !== "" ? newStatus : "Pending";
+    axios.put(
+      `http://localhost:8080/admin/orders/${orderId}/status`,
+      statusToSet,
+      {
+        headers: { "Content-Type": "text/plain" },
+        withCredentials: true
+      }
+    )
+      .then(() => {
+        setOrders(prev =>
+          prev.map(o => o.id === orderId ? { ...o, status: statusToSet } : o)
+        );
+      })
+      .catch(err => console.error("Failed to update status:", err));
   };
 
   const handleLogout = async () => {
-  try {
-    await axios.post("http://localhost:8080/logout", {}, {
-      withCredentials: true // ⭐ Needed for session cookies
-    });
-    localStorage.clear();
-    window.location.href = "/"; // full redirect to clear browser state
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
-
+    try {
+      await axios.post("http://localhost:8080/logout", {}, { withCredentials: true });
+      localStorage.clear();
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   const renderStatusControls = (order) => {
     if (order.status === 'RETURN_REQUESTED') {
@@ -58,10 +74,7 @@ export default function Admin_home() {
           </select>
         </div>
       );
-    } else if (
-      order.status !== 'RETURN_ACCEPTED' &&
-      order.status !== 'RETURN_REJECTED'
-    ) {
+    } else if (order.status !== 'RETURN_ACCEPTED' && order.status !== 'RETURN_REJECTED') {
       return (
         <div className="status-update">
           <label>Change Status:</label>
@@ -82,6 +95,7 @@ export default function Admin_home() {
   };
 
   const renderBadge = (status) => {
+    if (status === "PAID") status = "Pending";
     const map = {
       Pending: { class: "badge pending", label: "⏳ Pending" },
       Processing: { class: "badge processing", label: "🔄 Processing" },
@@ -96,20 +110,49 @@ export default function Admin_home() {
     return <span className={badge.class}>{badge.label}</span>;
   };
 
+  const filteredOrders = selectedStatus === "All"
+    ? orders
+    : orders.filter(o => o.status === selectedStatus);
+
+  const statusOptions = [
+    "All",
+    "Pending",
+    "Processing",
+    "Shipped",
+    "Delivered",
+    "Cancelled",
+    "RETURN_REQUESTED",
+    "RETURN_ACCEPTED",
+    "RETURN_REJECTED"
+  ];
+
   return (
     <div className="admin-page">
       <nav className="admin-navbar">
         <div className="admin-logo">Admin Dashboard</div>
         <div className="admin-nav-links">
           <NavLink to="/pm" className="nav-link">Product Management</NavLink>
+          <NavLink to="/um" className="nav-link">User Management</NavLink>
           <button onClick={handleLogout} className="nav-link logout">Logout</button>
         </div>
       </nav>
 
-      <h2 className="orders-heading">All Orders</h2>
+      <div className="status-navbar">
+        {statusOptions.map(status => (
+          <button
+            key={status}
+            className={`status-tab ${selectedStatus === status ? "active" : ""}`}
+            onClick={() => setSelectedStatus(status)}
+          >
+            {status.replaceAll("_", " ")}
+          </button>
+        ))}
+      </div>
+
+      <h2 className="orders-heading">{selectedStatus} Orders</h2>
 
       <div className="orders-list">
-        {orders.map(order => (
+        {filteredOrders.map(order => (
           <div key={order.id} className="order-card">
             <h3>Order ID: {order.id}</h3>
             <p>Order Date: {new Date(order.orderTime).toLocaleString()}</p>

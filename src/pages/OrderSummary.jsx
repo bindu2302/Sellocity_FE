@@ -1,53 +1,89 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import "../styles/OrderSummary.css";
+import html2pdf from "html2pdf.js";
 
 export default function OrderSummary() {
   const { orderId } = useParams();
   const [data, setData] = useState(null);
-  const [err,  setErr]  = useState("");
+  const [err, setErr] = useState("");
+  const invoiceRef = useRef();
 
   useEffect(() => {
     (async () => {
       try {
         const r = await fetch(`http://localhost:8080/order/summary/${orderId}`);
-
         if (!r.ok) throw new Error("Unable to fetch order");
         const json = await r.json();
         if (json.error) throw new Error("Order not found");
         setData(json);
-      } catch (e) { setErr(e.message); }
+      } catch (e) {
+        setErr(e.message);
+      }
     })();
   }, [orderId]);
 
-  if (err)   return <p className="text-center mt-6 text-danger">{err}</p>;
-  if (!data) return <p className="text-center mt-6">Loading…</p>;
+  const handleDownload = () => {
+    const opt = {
+      margin: 0.5,
+      filename: `SalesSavvy_Order_${orderId}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+    html2pdf().set(opt).from(invoiceRef.current).save();
+  };
+
+  if (err) return <p className="error-message">{err}</p>;
+  if (!data) return <p className="loading-message">Loading…</p>;
 
   return (
-    <div className="container mt-6">
-      <h2>✅ Payment Successful!</h2>
-      <p><b>Order&nbsp;ID:</b> {data.orderId}</p>
-      <p><b>Status:</b> {data.status}</p>
+    <div className="order-summary-container">
+      <div ref={invoiceRef}>
+        <div className="bill-header">
+          <h2>🧾 SalesSavvy - Order Invoice</h2>
+          <p><b>Order ID:</b> {data.orderId}</p>
+          <p><b>Status:</b> {data.status}</p>
+          <p><b>Date:</b> {new Date().toLocaleString()}</p>
+        </div>
 
-      <h4 className="mt-4">Items</h4>
-      <table className="table">
-        <thead>
-          <tr><th>Name</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr>
-        </thead>
-        <tbody>
-          {data.items.map((it, idx) => (
-            <tr key={idx}>
-              <td>{it.name}</td>
-              <td>{it.qty}</td>
-              <td>₹{it.price}</td>
-              <td>₹{it.qty * it.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <div className="bill-table-wrapper">
+          <table className="bill-table">
+            <thead>
+              <tr><th>S.No.</th><th>Name</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr>
+            </thead>
+            <tbody>
+              {data.items.map((it, idx) => (
+                <tr key={idx}>
+                  <td>{idx + 1}</td>
+                  <td>{it.name}</td>
+                  <td>{it.qty}</td>
+                  <td>₹{it.price}</td>
+                  <td>₹{it.qty * it.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      <h3 className="text-right">Total Paid: ₹{data.total}</h3>
+        <div className="bill-total">
+          <h3>Total Paid: ₹{data.total}</h3>
+        </div>
 
-      <Link to="/" className="btn btn-primary mt-3">Continue Shopping</Link>
+        <div className="bill-footer">
+          <p>Thank you for shopping with SalesSavvy! 😊</p>
+        </div>
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <button className="continue-shopping-btn" onClick={handleDownload}>
+          Download Invoice (PDF)
+        </button>
+        &nbsp;
+        <Link to="/customer_home" className="continue-shopping-btn">
+          Continue Shopping
+        </Link>
+      </div>
     </div>
   );
 }

@@ -37,14 +37,14 @@
     color: white;
   }
   50% {
-  color:  #37ebd0;;
+    color: yellow;
   }
 }
 
 
 .contact-wrapper {
   min-height: 100vh;
-  background-color:  #36e3f2;
+  background-color: #f4d03f; /* Lemon yellow */
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -54,7 +54,7 @@
 
 /* Main container */
 .contact-container {
-  background-color: #e7feff;
+  background-color: #fffde7;
   padding: 40px 30px;
   border-radius: 14px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -117,7 +117,7 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #07d2ff;
+  border-color: #ffc107;
   outline: none;
 }
 
@@ -135,7 +135,7 @@
 }
 
 .contact-submit:hover {
-  background-color: #36e3f2;
+  background-color: #ffc107;
   color: #000;
 }
 
@@ -143,7 +143,7 @@
 .contact-info {
   flex: 1;
   min-width: 250px;
-  background-color: #97e6ed;
+  background-color: #fff8b2;
   padding: 20px;
   border-radius: 12px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);

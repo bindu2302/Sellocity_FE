@@ -1,6 +1,6 @@
 /* === Colors === */
 :root {
-  --primary-color:  #36e3f2;
+  --primary-color: #f4d03f; /* Lemon Yellow */
   --dark-bg: #111;
   --white: #fff;
   --text-color: #333;
@@ -54,7 +54,7 @@ body {
     color: white;
   }
   50% {
-    color: #36e3f2;
+    color: yellow;
   }
 }
 
@@ -100,7 +100,7 @@ body {
   width: 45%;
   padding: 1.5rem;
   background: #fff;
-  border: 3px solid lightblue;
+  border: 3px solid yellow;
   border-radius: 8px;
   font-weight: 500; /* Added for slightly bolder text */
 }

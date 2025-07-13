@@ -10,7 +10,7 @@ export default function Product_manage() {
         <div className="admin-logo">Admin Dashboard</div>
         <div className="admin-nav-links">
           <NavLink to="/admin_home" className="nav-link">Order Management</NavLink> {/* back to admin home */}
-          <NavLink to="/logout" className="nav-link logout">Logout</NavLink>
+          <NavLink to="/" className="nav-link logout">Logout</NavLink>
         </div>
       </nav>
 

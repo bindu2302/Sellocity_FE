@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Productcard.css";
 
 /**
@@ -8,16 +9,26 @@ import "../styles/Productcard.css";
  */
 export default function ProductCard({ product, onAddToCart }) {
   const [qty, setQty] = useState(1);
+  const navigate = useNavigate();
+
   if (!product) return null;
 
   const inc = () => setQty((q) => q + 1);
   const dec = () => setQty((q) => Math.max(1, q - 1));
 
-  // 🔸 Round rating to nearest half
   const rating = Math.round((product.rating || 0) * 2) / 2;
 
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // prevent navigation when clicking "Add to cart"
+    onAddToCart(product, qty);
+  };
+
   return (
-    <article className="product-card">
+    <article className="product-card" onClick={handleCardClick} style={{ cursor: "pointer" }}>
       <figure className="product-img-wrap">
         <img
           src={product.photo || "/placeholder.png"}
@@ -32,39 +43,37 @@ export default function ProductCard({ product, onAddToCart }) {
         <p className="product-price">₹{product.price}</p>
         <p className="product-desc">{product.description}</p>
 
-        {/* ⭐ Show star rating only if rating > 0 */}
-        {rating > 0 && (
-          <div className="product-rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                style={{
-                  color:
+        <div className="product-rating">
+          {rating > 0 && (
+            <>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={
                     star <= Math.floor(rating)
-                      ? "#f5b301"
+                      ? "star full"
                       : star - 0.5 === rating
-                      ? "linear-gradient(to right, #f5b301 50%, #ccc 50%)"
-                      : "#ccc",
-                }}
-              >
-                ★
-              </span>
-            ))}
-            <span style={{ fontSize: "0.9rem", marginLeft: "6px", color: "#555" }}>
-              ({rating.toFixed(1)})
-            </span>
-          </div>
-        )}
+                      ? "star half"
+                      : "star empty"
+                  }
+                >
+                  ★
+                </span>
+              ))}
+              <span className="rating-text">({rating.toFixed(1)})</span>
+            </>
+          )}
+        </div>
 
-        <div className="qty-control">
+        <div className="qty-control" onClick={(e) => e.stopPropagation()}>
           <button onClick={dec} aria-label="decrease quantity">−</button>
-          <span>{qty}</span>
+          <span className="qty-value">{qty}</span>
           <button onClick={inc} aria-label="increase quantity">+</button>
         </div>
 
         <button
           className="btn btn-primary btn-sm"
-          onClick={() => onAddToCart(product, qty)}
+          onClick={handleAddToCart}
         >
           Add to cart
         </button>

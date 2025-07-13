@@ -77,7 +77,7 @@ export default function Cart() {
       key: data.key,
       amount: data.amount,
       currency: "INR",
-      name: "Sellocity",
+      name: "Sales Savvy",
       description: "Order Payment",
       order_id: data.orderId,
       handler: async (resp) => {
@@ -108,7 +108,7 @@ export default function Cart() {
     <>
       <nav className="navbar">
         <div className="nav-brand" onClick={() => navigate("/")}>
-          🛍️ Sellocity
+          🛍️ Sales Savvy
         </div>
         <ul className="nav-links">
           <li onClick={() => navigate("/customer_home")}>Home</li>
@@ -117,7 +117,7 @@ export default function Cart() {
           <li
             onClick={() => {
               localStorage.clear();
-              navigate("/sign_in", { replace: true });
+              navigate("/", { replace: true });
             }}
           >
             Logout

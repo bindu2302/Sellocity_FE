@@ -25,7 +25,7 @@ export default function Sign_up() {
       });
 
       alert(await resp.text());
-      navigate("/sign_in");
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Failed to sign up");
@@ -35,7 +35,7 @@ export default function Sign_up() {
   return (
     <>
      <header className="nav-container">
-        <div className="logo">SELLOCITY</div>
+        <div className="logo">SALES-SAVVY</div>
         <nav className="nav-links">
           <NavLink to="/">HOME</NavLink>
           <NavLink to="/about">ABOUT</NavLink>
